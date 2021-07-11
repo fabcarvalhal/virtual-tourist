@@ -9,7 +9,17 @@ import Foundation
 
 struct SearchPhotosResponse: Codable {
     
-    let photos: [SearchPhotosResponseItem]
+    let response: SearchPhotosResponseInner
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case response = "photos"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        response = try container.decode(SearchPhotosResponseInner.self, forKey: .response)
+    }
 }
 
 struct SearchPhotosResponseItem: Codable {
@@ -18,5 +28,32 @@ struct SearchPhotosResponseItem: Codable {
     let owner: String
     let server: String
     let farm: Int
-    let title: String
+    let secret: String
+}
+
+struct SearchPhotosResponseInner: Codable {
+    
+    let page: Int
+    let pages: Int
+    let perpage: Int
+    let total: Int
+    let photoList: [SearchPhotosResponseItem]
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case page
+        case pages
+        case perpage
+        case total
+        case photoList = "photo"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        page = try container.decode(Int.self, forKey: .page)
+        total = try container.decode(Int.self, forKey: .total)
+        pages = try container.decode(Int.self, forKey: .pages)
+        perpage = try container.decode(Int.self, forKey: .perpage)
+        photoList = try container.decode([SearchPhotosResponseItem].self, forKey: .photoList)
+    }
 }

@@ -12,5 +12,4 @@ struct SearchPhotosRequest: DictionaryConvertible {
     let lat: String
     let lon: String
     let page: String
-    let method = "flickr.photos.search"
 }

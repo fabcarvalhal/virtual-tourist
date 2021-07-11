@@ -48,6 +48,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No images found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fdz-vv-5WH">
+                                <rect key="frame" x="24" y="381" width="366" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T06-zi-MWR">
                                 <rect key="frame" x="0.0" y="88" width="414" height="269"/>
                             </imageView>
@@ -79,7 +85,9 @@
                         <viewLayoutGuide key="safeArea" id="AIa-Cm-fB6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Fdz-vv-5WH" firstAttribute="top" secondItem="T06-zi-MWR" secondAttribute="bottom" constant="24" id="6Oo-Y5-fgC"/>
                             <constraint firstItem="T06-zi-MWR" firstAttribute="top" secondItem="AIa-Cm-fB6" secondAttribute="top" id="COf-d3-5BX"/>
+                            <constraint firstItem="Fdz-vv-5WH" firstAttribute="leading" secondItem="AIa-Cm-fB6" secondAttribute="leading" constant="24" id="CSV-68-Imj"/>
                             <constraint firstItem="AIa-Cm-fB6" firstAttribute="bottom" secondItem="PCA-AY-01S" secondAttribute="bottom" id="G5L-nu-ET1"/>
                             <constraint firstItem="PCA-AY-01S" firstAttribute="leading" secondItem="AIa-Cm-fB6" secondAttribute="leading" id="Hg4-Yb-XGH"/>
                             <constraint firstItem="T06-zi-MWR" firstAttribute="height" secondItem="zCB-8r-wKz" secondAttribute="height" multiplier="0.3" id="MfE-OS-IZ6"/>
@@ -87,6 +95,7 @@
                             <constraint firstItem="T06-zi-MWR" firstAttribute="leading" secondItem="AIa-Cm-fB6" secondAttribute="leading" id="RTR-P3-S9z"/>
                             <constraint firstItem="PCA-AY-01S" firstAttribute="top" secondItem="VrD-9h-3tn" secondAttribute="bottom" id="RkV-b1-CHC"/>
                             <constraint firstItem="AIa-Cm-fB6" firstAttribute="trailing" secondItem="T06-zi-MWR" secondAttribute="trailing" id="Ur0-xX-170"/>
+                            <constraint firstItem="AIa-Cm-fB6" firstAttribute="trailing" secondItem="Fdz-vv-5WH" secondAttribute="trailing" constant="24" id="Wcd-RA-CZG"/>
                             <constraint firstItem="VrD-9h-3tn" firstAttribute="top" secondItem="T06-zi-MWR" secondAttribute="bottom" id="Z1W-Kq-4F8"/>
                             <constraint firstItem="VrD-9h-3tn" firstAttribute="leading" secondItem="AIa-Cm-fB6" secondAttribute="leading" id="fgA-41-J2G"/>
                             <constraint firstItem="AIa-Cm-fB6" firstAttribute="trailing" secondItem="PCA-AY-01S" secondAttribute="trailing" id="ve1-3R-M3Y"/>
@@ -94,7 +103,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="SaF-x1-xGl"/>
                     <connections>
+                        <outlet property="albumCollectionView" destination="VrD-9h-3tn" id="hFD-Ut-YwG"/>
                         <outlet property="locationImageView" destination="T06-zi-MWR" id="e4d-sK-dAI"/>
+                        <outlet property="noImagesFoundLabel" destination="Fdz-vv-5WH" id="3fw-cx-WCu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eyv-u9-XyD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

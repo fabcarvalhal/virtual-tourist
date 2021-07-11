@@ -3,6 +3,8 @@ import CoreLocation
 
 protocol FlickerAPIInterface: AnyObject {
     
+    func searchPhotos(request: SearchPhotosRequest,
+                      completion: @escaping (Result<SearchPhotosResponse>) -> Void)
 }
 
 final class FlickerAPIClient: BaseApiClient, FlickerAPIInterface {

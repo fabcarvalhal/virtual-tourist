@@ -19,6 +19,8 @@ class MapViewController: UIViewController {
     
     private let locationDetailSegueIdentifier = "showPlaceDetails"
     private let dataManager = CoreDataManager.shared
+    private var generatedImage: UIImage?
+    private var selectedCoordinate: CLLocationCoordinate2D?
     
     private lazy var fetchResultsManager: FetchResultsManager<Place> = {
         let manager = FetchResultsManager<Place>()
@@ -155,7 +157,15 @@ class MapViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? AlbumViewController {
-            destination.mapImage = sender as? UIImage
+            destination.mapImage = generatedImage
+            destination.selectedPlace = fetchResultsManager.dataSource?
+                .fetchedObjects?
+                .first(where: { place in
+                    return place.latitude == selectedCoordinate?.latitude &&
+                        place.longitude == selectedCoordinate?.longitude
+                })
+            
+            generatedImage = nil
         }
     }
 }
@@ -167,7 +177,9 @@ extension MapViewController: MKMapViewDelegate {
         guard let currentAnnotation = view.annotation else { return }
         snapshotMap(coordinate: currentAnnotation.coordinate) { [weak self] image in
             guard let self = self, let image = image else { return }
-            self.performSegue(withIdentifier: self.locationDetailSegueIdentifier, sender: image)
+            self.generatedImage = image
+            self.selectedCoordinate = currentAnnotation.coordinate
+            self.performSegue(withIdentifier: self.locationDetailSegueIdentifier, sender: nil)
         }
     }
 }

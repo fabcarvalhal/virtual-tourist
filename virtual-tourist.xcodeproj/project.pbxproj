@@ -32,10 +32,10 @@
 		7F8D17C8269A63D700123540 /* SearchPhotosRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17C7269A63D700123540 /* SearchPhotosRequest.swift */; };
 		7F8D17CC269A64D600123540 /* SearchPhotosResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17CB269A64D600123540 /* SearchPhotosResponse.swift */; };
 		7F8D17D3269A755000123540 /* URLRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17D2269A755000123540 /* URLRequestAdapter.swift */; };
-		7F8D17D6269A75D300123540 /* FlickerRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17D5269A75D300123540 /* FlickerRequestAdapter.swift */; };
 		7FD6A37D269A771F003B35CD /* FlickerCommonRequestParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6A37C269A771F003B35CD /* FlickerCommonRequestParams.swift */; };
 		7FD6A382269A7CE4003B35CD /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6A381269A7CE4003B35CD /* AlbumViewController.swift */; };
 		7FD6A386269A827F003B35CD /* FlickrPhotoURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6A385269A827F003B35CD /* FlickrPhotoURLBuilder.swift */; };
+		7FD6A390269A9EC8003B35CD /* FlickerRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17D5269A75D300123540 /* FlickerRequestAdapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -296,7 +296,7 @@
 			files = (
 				7F8D17C5269A63AB00123540 /* DictionaryConvertible.swift in Sources */,
 				7F0B1DA526923CC400F7B592 /* Endpoint.swift in Sources */,
-				7F8D17D6269A75D300123540 /* FlickerRequestAdapter.swift in Sources */,
+				7FD6A390269A9EC8003B35CD /* FlickerRequestAdapter.swift in Sources */,
 				7F0B1D9826923CA800F7B592 /* RequestParams.swift in Sources */,
 				7F1694C4269A28D40068A28D /* CoreDataManager.swift in Sources */,
 				7F0B1DAB26923CC400F7B592 /* URLRequestBuilder.swift in Sources */,

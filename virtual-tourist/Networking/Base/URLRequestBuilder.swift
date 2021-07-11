@@ -92,7 +92,7 @@ final class URLRequestBuilder {
             }
             
             adapter?.adapt(&urlRequest)
-
+            
             return urlRequest
         } catch {
             throw URLRequestBuilderError.invalidUrl

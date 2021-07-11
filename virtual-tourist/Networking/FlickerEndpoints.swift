@@ -12,7 +12,7 @@ enum FlickerEndpoint: Endpoint {
     case searchPhotos
     
     var baseUrl: String {
-        "https://www.flickr.com/services/rest/"
+        "https://www.flickr.com/services/rest"
     }
     
     var method: HTTPMethod {
