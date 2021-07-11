@@ -133,9 +133,9 @@ class MapViewController: UIViewController {
         camera.centerCoordinateDistance = 1000000
         camera.centerCoordinate = coordinate
         options.camera = camera
-        
-        let width = Double(UIScreen.main.bounds.width)
-        let height = width * 0.30
+        options.scale = UIScreen.main.scale
+        let width = Double(mapView.bounds.width)
+        let height = width * 0.60
         options.size = CGSize(width: width, height: height)
         
         let snapshot = MKMapSnapshotter(options: options)
