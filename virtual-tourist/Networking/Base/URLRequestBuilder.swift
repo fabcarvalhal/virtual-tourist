@@ -16,6 +16,7 @@ final class URLRequestBuilder {
     private(set) var parameters: RequestParams?
     private(set) var cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy
     private(set) var timeoutInterval: Double = 60
+    private(set) var adapter: URLRequestAdapter?
     
     enum URLRequestBuilderError: LocalizedError {
         
@@ -66,6 +67,11 @@ final class URLRequestBuilder {
         return self
     }
     
+    func set(adapter: URLRequestAdapter) -> Self {
+        self.adapter = adapter
+        return self
+    }
+    
     func build() throws -> URLRequest {
         do {
             guard let url = URL(string: baseUrl) else {
@@ -85,6 +91,8 @@ final class URLRequestBuilder {
                 urlRequest = try buildRequestParams(urlRequest, params: params)
             }
             
+            adapter?.adapt(&urlRequest)
+
             return urlRequest
         } catch {
             throw URLRequestBuilderError.invalidUrl

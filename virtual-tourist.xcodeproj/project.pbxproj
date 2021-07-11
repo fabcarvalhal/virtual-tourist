@@ -26,6 +26,14 @@
 		7F34615426923BA500DA61B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F34615326923BA500DA61B1 /* Assets.xcassets */; };
 		7F34615726923BA500DA61B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F34615526923BA500DA61B1 /* LaunchScreen.storyboard */; };
 		7F8D17BA269A55FB00123540 /* FetchResultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17B9269A55FB00123540 /* FetchResultsManager.swift */; };
+		7F8D17BD269A5FAD00123540 /* FlickerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17BC269A5FAD00123540 /* FlickerAPI.swift */; };
+		7F8D17C0269A605800123540 /* FlickerEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17BF269A605800123540 /* FlickerEndpoints.swift */; };
+		7F8D17C5269A63AB00123540 /* DictionaryConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17C4269A63AB00123540 /* DictionaryConvertible.swift */; };
+		7F8D17C8269A63D700123540 /* SearchPhotosRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17C7269A63D700123540 /* SearchPhotosRequest.swift */; };
+		7F8D17CC269A64D600123540 /* SearchPhotosResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17CB269A64D600123540 /* SearchPhotosResponse.swift */; };
+		7F8D17D3269A755000123540 /* URLRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17D2269A755000123540 /* URLRequestAdapter.swift */; };
+		7F8D17D6269A75D300123540 /* FlickerRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D17D5269A75D300123540 /* FlickerRequestAdapter.swift */; };
+		7FD6A37D269A771F003B35CD /* FlickerCommonRequestParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6A37C269A771F003B35CD /* FlickerCommonRequestParams.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +58,14 @@
 		7F34615626923BA500DA61B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F34615826923BA500DA61B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F8D17B9269A55FB00123540 /* FetchResultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResultsManager.swift; sourceTree = "<group>"; };
+		7F8D17BC269A5FAD00123540 /* FlickerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerAPI.swift; sourceTree = "<group>"; };
+		7F8D17BF269A605800123540 /* FlickerEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerEndpoints.swift; sourceTree = "<group>"; };
+		7F8D17C4269A63AB00123540 /* DictionaryConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertible.swift; sourceTree = "<group>"; };
+		7F8D17C7269A63D700123540 /* SearchPhotosRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosRequest.swift; sourceTree = "<group>"; };
+		7F8D17CB269A64D600123540 /* SearchPhotosResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotosResponse.swift; sourceTree = "<group>"; };
+		7F8D17D2269A755000123540 /* URLRequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestAdapter.swift; sourceTree = "<group>"; };
+		7F8D17D5269A75D300123540 /* FlickerRequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerRequestAdapter.swift; sourceTree = "<group>"; };
+		7FD6A37C269A771F003B35CD /* FlickerCommonRequestParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerCommonRequestParams.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +82,11 @@
 		7F0B1D9526923C9200F7B592 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				7F8D17D8269A762F00123540 /* Adapters */,
 				7F0B1DB026923DFF00F7B592 /* Models */,
 				7F0B1D9626923C9D00F7B592 /* Base */,
+				7F8D17BC269A5FAD00123540 /* FlickerAPI.swift */,
+				7F8D17BF269A605800123540 /* FlickerEndpoints.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -85,6 +104,7 @@
 				7F0B1D9F26923CC400F7B592 /* URLRequester.swift */,
 				7F0B1D9A26923CB400F7B592 /* BaseApiClient.swift */,
 				7F0B1D9726923CA800F7B592 /* RequestParams.swift */,
+				7F8D17D2269A755000123540 /* URLRequestAdapter.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -108,6 +128,8 @@
 		7F0B1DB026923DFF00F7B592 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7F8D17CA269A64BF00123540 /* Response */,
+				7F8D17C2269A636F00123540 /* Request */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -125,6 +147,7 @@
 			children = (
 				7F1694C3269A28D40068A28D /* CoreDataManager.swift */,
 				7F8D17B9269A55FB00123540 /* FetchResultsManager.swift */,
+				7F8D17C4269A63AB00123540 /* DictionaryConvertible.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -160,6 +183,31 @@
 				7F34615826923BA500DA61B1 /* Info.plist */,
 			);
 			path = "virtual-tourist";
+			sourceTree = "<group>";
+		};
+		7F8D17C2269A636F00123540 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				7F8D17C7269A63D700123540 /* SearchPhotosRequest.swift */,
+				7FD6A37C269A771F003B35CD /* FlickerCommonRequestParams.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		7F8D17CA269A64BF00123540 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				7F8D17CB269A64D600123540 /* SearchPhotosResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		7F8D17D8269A762F00123540 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				7F8D17D5269A75D300123540 /* FlickerRequestAdapter.swift */,
+			);
+			path = Adapters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,7 +280,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F8D17C5269A63AB00123540 /* DictionaryConvertible.swift in Sources */,
 				7F0B1DA526923CC400F7B592 /* Endpoint.swift in Sources */,
+				7F8D17D6269A75D300123540 /* FlickerRequestAdapter.swift in Sources */,
 				7F0B1D9826923CA800F7B592 /* RequestParams.swift in Sources */,
 				7F1694C4269A28D40068A28D /* CoreDataManager.swift in Sources */,
 				7F0B1DAB26923CC400F7B592 /* URLRequestBuilder.swift in Sources */,
@@ -240,14 +290,20 @@
 				7F34614C26923BA400DA61B1 /* MapViewController.swift in Sources */,
 				7F0B1DAA26923CC400F7B592 /* SimpleJSONHandler.swift in Sources */,
 				7F34614826923BA400DA61B1 /* AppDelegate.swift in Sources */,
+				7FD6A37D269A771F003B35CD /* FlickerCommonRequestParams.swift in Sources */,
+				7F8D17BD269A5FAD00123540 /* FlickerAPI.swift in Sources */,
+				7F8D17C0269A605800123540 /* FlickerEndpoints.swift in Sources */,
 				7F0B1DA626923CC400F7B592 /* HTTPHeaderField.swift in Sources */,
+				7F8D17C8269A63D700123540 /* SearchPhotosRequest.swift in Sources */,
 				7F0B1D9B26923CB400F7B592 /* BaseApiClient.swift in Sources */,
 				7F34614A26923BA400DA61B1 /* SceneDelegate.swift in Sources */,
 				7F8D17BA269A55FB00123540 /* FetchResultsManager.swift in Sources */,
 				7F0B1DA826923CC400F7B592 /* HTTPMethod.swift in Sources */,
 				7F0B1DAC26923CC400F7B592 /* ContentType.swift in Sources */,
+				7F8D17CC269A64D600123540 /* SearchPhotosResponse.swift in Sources */,
 				7F0B1DA726923CC400F7B592 /* URLRequester.swift in Sources */,
 				7F0B1DA926923CC400F7B592 /* Result.swift in Sources */,
+				7F8D17D3269A755000123540 /* URLRequestAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
