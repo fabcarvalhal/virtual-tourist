@@ -9,9 +9,6 @@ import UIKit
 import MapKit
 import CoreData
 
-
-// This is a flickr photo url structure
-// https://live.staticflickr.com/{server}/{photo_id}_{secret}_c.jpg
 class MapViewController: UIViewController {
     
     @IBOutlet private weak var mapView: MKMapView! {
