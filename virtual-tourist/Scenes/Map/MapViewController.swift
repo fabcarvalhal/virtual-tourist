@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
         }
     }
     
+    private let locationDetailSegueIdentifier = "showPlaceDetails"
     private let dataManager = CoreDataManager.shared
     
     private lazy var fetchResultsManager: FetchResultsManager<Place> = {
@@ -32,8 +33,7 @@ class MapViewController: UIViewController {
     
     private let placesRequest: NSFetchRequest<Place> = {
         let request: NSFetchRequest<Place> = Place.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
+        request.sortDescriptors = []
         return request
     }()
     
@@ -43,12 +43,19 @@ class MapViewController: UIViewController {
         loadPins()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     private func loadPins() {
         guard let dataSource = fetchResultsManager.dataSource else { return }
         fetchResultsManager.performFetch()
-        dataSource.fetchedObjects?.forEach { place in
-            mapView.addAnnotation(makeAnnotation(from: place))
+        let annotations = dataSource.fetchedObjects?.map { place in
+            makeAnnotation(from: place)
         }
+        guard let unwrappedAnnotations = annotations else { return }
+        mapView.showAnnotations(unwrappedAnnotations, animated: true)
     }
     
     private func makeAnnotation(from place: Place) -> MKPointAnnotation {
@@ -119,13 +126,52 @@ class MapViewController: UIViewController {
         }
         return address
     }
+    
+    private func snapshotMap(coordinate: CLLocationCoordinate2D,
+                             completion: @escaping (UIImage?) -> Void) {
+        let options = MKMapSnapshotter.Options()
+        let camera = MKMapCamera()
+        camera.centerCoordinateDistance = 1000000
+        camera.centerCoordinate = coordinate
+        options.camera = camera
+        
+        let width = Double(UIScreen.main.bounds.width)
+        let height = width * 0.30
+        options.size = CGSize(width: width, height: height)
+        
+        let snapshot = MKMapSnapshotter(options: options)
+        snapshot.start { snapshot, error in
+            guard let snapshot = snapshot, error == nil else {
+                return
+            }
+
+            let image = UIGraphicsImageRenderer(size: options.size).image { _ in
+                snapshot.image.draw(at: .zero)
+                let pinView = MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
+                let pinImage = pinView.image
+                let point = snapshot.point(for: coordinate)
+                pinImage?.draw(at: point)
+            }
+            completion(image)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? AlbumViewController {
+            destination.mapImage = sender as? UIImage
+        }
+    }
 }
 
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        // TODO: Take the user to the album
+        guard let currentAnnotation = view.annotation else { return }
+        snapshotMap(coordinate: currentAnnotation.coordinate) { [weak self] image in
+            guard let self = self, let image = image else { return }
+            self.performSegue(withIdentifier: self.locationDetailSegueIdentifier, sender: image)
+        }
     }
 }
 
