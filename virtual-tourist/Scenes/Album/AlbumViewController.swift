@@ -13,13 +13,12 @@ final class AlbumViewController: UIViewController {
     
     var mapImage: UIImage?
     var selectedPlace: Place?
-    
+    @IBOutlet private weak var newAlbumButton: UIButton!
     @IBOutlet private weak var locationImageView: UIImageView!
     @IBOutlet private weak var albumCollectionView: UICollectionView! {
         didSet {
             albumCollectionView.delegate = self
             albumCollectionView.dataSource = self
-            albumCollectionView.backgroundView = noImagesFoundLabel
         }
     }
     
@@ -44,7 +43,7 @@ final class AlbumViewController: UIViewController {
         }
         return request
     }()
-    
+    private let maxPageNumber = 30
     private let interItemSpacing: CGFloat = 2
     private let lineSpacing: CGFloat = 4
     private let itemsPerLine: CGFloat = 3
@@ -71,7 +70,7 @@ final class AlbumViewController: UIViewController {
         locationImageView.image = mapImage
     }
     
-    func loadAlbum() {
+    private func loadAlbum() {
         fetchResultsManager.performFetch()
         guard fetchResultsManager.dataSource?.fetchedObjects?.count == .zero else {
             albumCollectionView.reloadData()
@@ -88,7 +87,7 @@ final class AlbumViewController: UIViewController {
         }
     }
     
-    func save(_ loadedPhotos: [SearchPhotosResponseItem],
+    private func save(_ loadedPhotos: [SearchPhotosResponseItem],
               context: NSManagedObjectContext) {
         loadedPhotos.map { item -> Photo in
             let photo = Photo(context: context)
@@ -104,9 +103,9 @@ final class AlbumViewController: UIViewController {
         try? context.save()
     }
     
-    func save(downloadedImageData: Data,
-              forObjectWith id: NSManagedObjectID,
-              context: NSManagedObjectContext) {
+    private func save(downloadedImageData: Data,
+                      forObjectWith id: NSManagedObjectID,
+                      context: NSManagedObjectContext) {
         context.perform {
             guard let photo = context.object(with: id) as? Photo else { return }
             photo.imageData = downloadedImageData
@@ -114,10 +113,18 @@ final class AlbumViewController: UIViewController {
         }
     }
     
+    private func deleteItem(at indexPath: IndexPath) {
+        if let selectedPlace = selectedPlace,
+           let item = fetchResultsManager.dataSource?.object(at: indexPath) {
+            selectedPlace.removeFromAlbum(item)
+            try? dataManager.viewContext.save()
+        }
+    }
+    
     private func getAlbumFromFlickr(location: Place) {
         var randomNumberGenerator = SystemRandomNumberGenerator()
         toggleEmptyState(isEmpty: false)
-        let randomPage = String(randomNumberGenerator.next(upperBound: UInt(30)))
+        let randomPage = String(randomNumberGenerator.next(upperBound: UInt(maxPageNumber)))
         
         let request = SearchPhotosRequest(lat: String(location.latitude),
                                           lon: String(location.longitude),
@@ -126,7 +133,7 @@ final class AlbumViewController: UIViewController {
             guard let self = self else { return }
             switch result {
             case .failure(let failure):
-                print(failure)
+                self.showErrorAlert(message: failure.localizedDescription, title: "Error")
             case .success(let data):
                 guard data.response.photoList.count > 0 else {
                     return self.toggleEmptyState(isEmpty: true)
@@ -152,8 +159,10 @@ final class AlbumViewController: UIViewController {
     }
     
     @IBAction private func newAlbumAction() {
+        guard let place = selectedPlace else { return }
+        newAlbumButton.isEnabled = false
         deleteAllItems()
-        loadAlbum()
+        getAlbumFromFlickr(location: place)
     }
     
     private func deleteAllItems() {
@@ -188,6 +197,10 @@ extension AlbumViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         fetchResultsManager.dataSource?.fetchedObjects?.count ?? .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deleteItem(at: indexPath)
     }
 }
 
