@@ -10,8 +10,7 @@ final class CoreDataManager {
         return persistentContainer.viewContext
     }
     
-    var persistentContainer: NSPersistentContainer!
-    var backgroundContext: NSManagedObjectContext!
+    private var persistentContainer: NSPersistentContainer!
     
     private init() {}
     
@@ -19,21 +18,11 @@ final class CoreDataManager {
         persistentContainer = NSPersistentContainer(name: modelName)
     }
     
-    private func configureContexts() {
-        backgroundContext = persistentContainer.newBackgroundContext()
-        viewContext.automaticallyMergesChangesFromParent = true
-        backgroundContext.automaticallyMergesChangesFromParent = true
-        
-        backgroundContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-        viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
-    }
-    
     func load(completion: ((Error?) -> Void)? = nil) {
-        persistentContainer.loadPersistentStores { [weak self] storeDescription, error in
+        persistentContainer.loadPersistentStores { storeDescription, error in
             guard error == nil else {
                 fatalError(error!.localizedDescription)
             }
-            self?.configureContexts()
             completion?(error)
         }
     }
