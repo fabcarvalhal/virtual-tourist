@@ -64,6 +64,7 @@ final class AlbumViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
+        try? dataManager.viewContext.save()
     }
     
     private func setLocationImage() {
@@ -109,7 +110,6 @@ final class AlbumViewController: UIViewController {
         context.perform {
             guard let photo = context.object(with: id) as? Photo else { return }
             photo.imageData = downloadedImageData
-            try? context.save()
         }
     }
     
