@@ -33,5 +33,17 @@ class BaseApiClient {
             }
         }
     }
+    
+    func makeRequest(with urlRequest: URLRequest,
+                                 completion: @escaping (Result<Data>) -> Void) {
+        urlRequester.makeRequest(with: urlRequest) { response in
+            switch response {
+            case .success(let data):
+                    completion(.success(data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
 

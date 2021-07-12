@@ -37,6 +37,7 @@ enum URLRequesterError: LocalizedError {
 final class URLRequester: URLRequesterProtocol {
     
     func makeRequest(with request: URLRequest, completion: ((Result<Data>) -> Void)?) {
+        print(request)
         URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
             if let error = error {
                 completion?(.failure(URLRequesterError.urlSessionError(error)))

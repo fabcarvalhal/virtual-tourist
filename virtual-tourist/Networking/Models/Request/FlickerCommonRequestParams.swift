@@ -10,7 +10,7 @@ import Foundation
 struct FlickerSearchRequestParams: DictionaryConvertible {
     
     let nojsoncallback = 1
-    let api_key = "e9ffade65473cd2a5325fffbad7ae681"
+    let api_key = "432097f7e40dab646eb8ab911e392371"
     let method = "flickr.photos.search"
     let format = "json"
 }

@@ -17,10 +17,10 @@ final class CoreDataManager {
     
     func configure(with modelName: String = defaultContainerName) {
         persistentContainer = NSPersistentContainer(name: modelName)
-        backgroundContext = persistentContainer.newBackgroundContext()
     }
     
     private func configureContexts() {
+        backgroundContext = persistentContainer.newBackgroundContext()
         viewContext.automaticallyMergesChangesFromParent = true
         backgroundContext.automaticallyMergesChangesFromParent = true
         
