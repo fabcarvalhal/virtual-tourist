@@ -101,6 +101,7 @@ final class AlbumViewController: UIViewController {
             dataManager.viewContext.insert($0)
             downloadPhoto(for: $0)
         }
+        try? context.save()
     }
     
     func save(downloadedImageData: Data,
@@ -144,7 +145,6 @@ final class AlbumViewController: UIViewController {
                 self.save(downloadedImageData: imageData,
                           forObjectWith: item.objectID,
                           context: context)
-                try? context.save()
             default:
                 break
             }
@@ -175,8 +175,7 @@ extension AlbumViewController: UICollectionViewDataSource {
               let item = fetchResultsManager.dataSource?.object(at: indexPath)
         else { return .init() }
         if let imageData = item.imageData {
-            albumCell.imageView.image = UIImage(data: imageData)
-            cell.stopShimmering()
+            albumCell.setImage(imageData)
         } else {
             cell.startShimmering()
         }

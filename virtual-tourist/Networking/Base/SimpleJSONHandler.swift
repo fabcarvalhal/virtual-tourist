@@ -25,7 +25,6 @@ final class SimpleJSONHandler<T: Codable> {
     
     func decode(_ data: Data) throws -> T  {
         var dataToDecode = data
-        print(try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any])
         if let decodeDataAfter = decodeDataAfter {
             let range = decodeDataAfter..<data.count
             dataToDecode = dataToDecode.subdata(in: range)
