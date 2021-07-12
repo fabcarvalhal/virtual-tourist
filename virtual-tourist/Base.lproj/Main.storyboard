@@ -126,6 +126,7 @@
                     <connections>
                         <outlet property="albumCollectionView" destination="VrD-9h-3tn" id="hFD-Ut-YwG"/>
                         <outlet property="locationImageView" destination="T06-zi-MWR" id="e4d-sK-dAI"/>
+                        <outlet property="newAlbumButton" destination="PCA-AY-01S" id="BIC-1T-Cg3"/>
                         <outlet property="noImagesFoundLabel" destination="Fdz-vv-5WH" id="3fw-cx-WCu"/>
                     </connections>
                 </viewController>

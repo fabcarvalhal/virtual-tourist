@@ -88,7 +88,7 @@ final class AlbumViewController: UIViewController {
     }
     
     private func save(_ loadedPhotos: [SearchPhotosResponseItem],
-              context: NSManagedObjectContext) {
+                      context: NSManagedObjectContext) {
         loadedPhotos.map { item -> Photo in
             let photo = Photo(context: context)
             photo.id = item.id
@@ -130,15 +130,18 @@ final class AlbumViewController: UIViewController {
                                           lon: String(location.longitude),
                                           page: randomPage)
         apiClient.searchPhotos(request: request) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .failure(let failure):
-                self.showErrorAlert(message: failure.localizedDescription, title: "Error")
-            case .success(let data):
-                guard data.response.photoList.count > 0 else {
-                    return self.toggleEmptyState(isEmpty: true)
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.newAlbumButton.isEnabled = true
+                switch result {
+                case .failure(let failure):
+                    self.showErrorAlert(message: failure.localizedDescription, title: "Error")
+                case .success(let data):
+                    guard data.response.photoList.count > 0 else {
+                        return self.toggleEmptyState(isEmpty: true)
+                    }
+                    self.save(data.response.photoList, context: self.dataManager.viewContext)
                 }
-                self.save(data.response.photoList, context: self.dataManager.viewContext)
             }
         }
     }
