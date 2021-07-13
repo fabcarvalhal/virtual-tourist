@@ -5,7 +5,7 @@
         <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="secret" optional="YES" attributeType="String"/>
         <attribute name="server" optional="YES" attributeType="String"/>
-        <relationship name="place" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Place" inverseName="album" inverseEntity="Place"/>
+        <relationship name="place" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Place" inverseName="album" inverseEntity="Place"/>
     </entity>
     <entity name="Place" representedClassName="Place" syncable="YES" codeGenerationType="class">
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
