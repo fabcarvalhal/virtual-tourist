@@ -43,7 +43,9 @@ final class AlbumViewController: UIViewController {
         }
         return request
     }()
-    private let maxPageNumber = 30
+    
+    private let maxPageNumber = 10
+    private let itemsPerPage = 30
     private let interItemSpacing: CGFloat = 2
     private let lineSpacing: CGFloat = 4
     private let itemsPerLine: CGFloat = 3
@@ -114,21 +116,30 @@ final class AlbumViewController: UIViewController {
     }
     
     private func deleteItem(at indexPath: IndexPath) {
-        if let selectedPlace = selectedPlace,
-           let item = fetchResultsManager.dataSource?.object(at: indexPath) {
-            selectedPlace.removeFromAlbum(item)
-            try? dataManager.viewContext.save()
-        }
+        guard let item = fetchResultsManager.dataSource?.object(at: indexPath),
+              let itemId = item.id
+        else { return }
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        fetchRequest.entity = Photo.entity()
+        fetchRequest.fetchLimit = 1
+        fetchRequest.predicate = NSPredicate(format: "id = %@", itemId)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        _ = try? dataManager.viewContext.execute(deleteRequest)
+        try? dataManager.viewContext.save()
+        fetchResultsManager.performFetch()
+        albumCollectionView.deleteItems(at: [indexPath])
     }
     
     private func getAlbumFromFlickr(location: Place) {
         var randomNumberGenerator = SystemRandomNumberGenerator()
         toggleEmptyState(isEmpty: false)
-        let randomPage = String(randomNumberGenerator.next(upperBound: UInt(maxPageNumber)))
+        let randomPage = randomNumberGenerator.next(upperBound: UInt(maxPageNumber))
         
         let request = SearchPhotosRequest(lat: String(location.latitude),
                                           lon: String(location.longitude),
-                                          page: randomPage)
+                                          page: Int(randomPage),
+                                          per_page: itemsPerPage)
         apiClient.searchPhotos(request: request) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -170,11 +181,13 @@ final class AlbumViewController: UIViewController {
     
     private func deleteAllItems() {
         if let selectedPlace = selectedPlace {
-            fetchResultsManager.dataSource?.fetchedObjects?.forEach { item in
-                selectedPlace.removeFromAlbum(item)
-                dataManager.viewContext.processPendingChanges()
-            }
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+            fetchRequest.entity = Photo.entity()
+            fetchRequest.predicate = NSPredicate(format: "place = %@", selectedPlace)
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            _ = try? dataManager.viewContext.execute(deleteRequest)
             try? dataManager.viewContext.save()
+            fetchResultsManager.performFetch()
         }
     }
 }
@@ -243,11 +256,9 @@ extension AlbumViewController: NSFetchedResultsControllerDelegate {
         case .update:
             guard let indexPath = indexPath else { return }
             albumCollectionView.reloadItems(at: [indexPath])
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            albumCollectionView.deleteItems(at: [indexPath])
         default:
             break
         }
     }
 }
+

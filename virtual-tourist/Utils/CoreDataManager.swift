@@ -16,6 +16,8 @@ final class CoreDataManager {
     
     func configure(with modelName: String = defaultContainerName) {
         persistentContainer = NSPersistentContainer(name: modelName)
+        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+        viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
     }
     
     func load(completion: ((Error?) -> Void)? = nil) {

@@ -11,5 +11,6 @@ struct SearchPhotosRequest: DictionaryConvertible {
     
     let lat: String
     let lon: String
-    let page: String
+    let page: Int
+    let per_page: Int
 }
